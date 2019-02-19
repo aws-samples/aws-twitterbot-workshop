@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'twitterPollerRetweeter Sample SAM Template for twitterPollerRetweeter
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+Outputs:
+  RetweetFunction:
+    Description: Retweet Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - RetweetFunction
+      - Arn
+  RetweetFunctionIamRole:
+    Description: Implicit IAM Role created for TwitterPoller function
+    Value:
+      Fn::GetAtt:
+      - RetweetFunctionRole
+      - Arn
+Resources:
+  RetweetFunction:
+    Properties:
+      AutoPublishAlias: live
+      CodeUri: s3://alex-aws-lambda-code-package/3b35f8b810387905aa86ce31ea20dc3d
+      Environment:
+        Variables:
+          TweetSearchString: AWS Lambda
+      Events:
+        RetweetEvent:
+          Properties:
+            Schedule: rate(5 minutes)
+          Type: Schedule
+      Handler: twitterRetweet.lambda_handler
+      Policies:
+      - CloudWatchPutMetricPolicy: {}
+      Runtime: python3.6
+      Tracing: Active
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

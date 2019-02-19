@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ImageUpdater Sample SAM Template for ImageUpdater
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+Outputs:
+  ImageUpdateFunction:
+    Description: Image Update Function ARN
+    Value:
+      Fn::GetAtt:
+      - ImageUpdateFunction
+      - Arn
+Resources:
+  ImageUpdateFunction:
+    Properties:
+      AutoPublishAlias: live
+      CodeUri: s3://alex-aws-lambda-code-package/dfcc0feb2b0a3686a8655e8c6ce5ce1d
+      Handler: twitterUpdateImage.lambda_handler
+      Runtime: python3.6
+      Tracing: Active
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

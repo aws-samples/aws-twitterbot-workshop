@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    ImageUpdater
+    Sample SAM Template for ImageUpdater
+    
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 30
+
+Resources:      
+    ImageUpdateFunction:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            CodeUri: build/
+            Handler: twitterUpdateImage.lambda_handler
+            Runtime: python3.6          
+            AutoPublishAlias: live 
+            Tracing: Active
+
+Outputs:
+    ImageUpdateFunction:
+      Description: "Image Update Function ARN"
+      Value: !GetAtt ImageUpdateFunction.Arn

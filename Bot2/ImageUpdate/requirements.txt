@@ -1,0 +1,4 @@
+requests==2.20.0
+tweepy
+boto3
+aws_xray_sdk

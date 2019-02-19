@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    twitterPollerRetweeter
+    Sample SAM Template for twitterPollerRetweeter
+    
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 30
+
+
+Resources:
+
+    RetweetFunction:
+        Type: AWS::Serverless::Function 
+        Properties:
+            CodeUri: build/
+            Handler: twitterRetweet.lambda_handler
+            Runtime: python3.6
+            AutoPublishAlias: live
+            Environment: 
+                Variables:
+                    TweetSearchString: 'AWS Lambda'
+            Policies:
+                - CloudWatchPutMetricPolicy: {}
+            Tracing: Active
+            Events:
+                RetweetEvent:
+                    Type: Schedule
+                    Properties:
+                        Schedule: rate(5 minutes)
+
+Outputs:
+    RetweetFunction:
+      Description: "Retweet Lambda Function ARN"
+      Value: !GetAtt RetweetFunction.Arn
+
+    RetweetFunctionIamRole:
+      Description: "Implicit IAM Role created for TwitterPoller function"
+      Value: !GetAtt RetweetFunctionRole.Arn

@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": "ssm:GetParameter",
+        "Resource": [
+            "arn:aws:ssm:us-west-2:505173050228:parameter/twitter-consumer-key",
+            "arn:aws:ssm:us-west-2:505173050228:parameter/twitter-consumer-secret",
+            "arn:aws:ssm:us-west-2:505173050228:parameter/twitter-access-token",
+            "arn:aws:ssm:us-west-2:505173050228:parameter/twitter-access-token-secret",
+            "arn:aws:ssm:us-west-2:505173050228:parameter/twitter-max-id",
+            "arn:aws:ssm:us-west-2:505173050228:parameter/day-tweet-processed"
+        ]
+    }
+}
