@@ -1,9 +1,9 @@
-# aws-workshop-twitter
+# aws-twitterbot-workshop
 Twitter bot(s) based on Lambda
 
 ## Overview 
 
-In this builders session, you will build a serverless twitter bot.
+In this workshop, you will build a serverless twitter bot.
 
 There are 2 kind of bots you could build depending on your choice:
 1. A simple retweet bot which will look for terms you are interested in and will retweet it automatically.
