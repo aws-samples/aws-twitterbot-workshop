@@ -1,9 +1,10 @@
-# aws-twitter-bot
-Twitter bot based on Lambda
+# aws-workshop-twitter
+Twitter bot(s) based on Lambda
 
 ## Overview 
 
 In this builders session, you will build a serverless twitter bot.
+
 There are 2 kind of bots you could build depending on your choice:
 1. A simple retweet bot which will look for terms you are interested in and will retweet it automatically.
 2. A bot which will update image sent to you based on specific keyword you define
@@ -66,8 +67,8 @@ Interact with AWS environments and twitter through Python:
 ## Steps:
 
 0. Define the bot you want to do (the simple is Bot 1)
-1. [Manage your Twitter credentials in AWS for use in lambdas](./Twitter_credentials/README.md)
-2. [Setting up AWS Cloud 9 Development Environment](./AWS_Cloud9/README.md)
+1. [Manage your Twitter credentials in AWS for use in lambdas](./00-Twitter_credentials/README.md)
+2. [Setting up AWS Cloud 9 Development Environment](./00-AWS_Cloud9/README.md)
 3. [Bot 1](./Bot1/README.md)
 4. [Bot 2](./Bot2/README.md)
 
