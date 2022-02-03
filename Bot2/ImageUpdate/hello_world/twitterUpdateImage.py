@@ -56,7 +56,7 @@ def get_face_boxes(faces, source_size):
 
 
 def build_masked_image(source, mask, boxes):
-    print "PutMask"
+    print("PutMask")
     for box in boxes:
         size = (box[2] - box[0], box[3] - box[1])
         scaled_mask = mask.rotate(-box[4], expand=1).resize(size, Image.ANTIALIAS)
@@ -64,7 +64,7 @@ def build_masked_image(source, mask, boxes):
         source.paste(scaled_mask, box[:4], scaled_mask)
 
 def updateImage(faceDetails, imageSource):
-    print "UpdateImage"
+    print("UpdateImage")
     boxes = get_face_boxes(faceDetails, imageSource.size)
     if boxes:
         build_masked_image(imageSource, MASK, boxes)
@@ -73,7 +73,7 @@ def updateImage(faceDetails, imageSource):
     return imageSource
 
 def tweetImage(authent, imageProcessed):
-    print "tweetImage"
+    print("tweetImage")
     api = tweepy.API(authent)
     destination = '/tmp/image_out.jpeg'
     imageProcessed.save(destination, "JPEG", quality=80, optimize=True, progressive=True)
@@ -87,7 +87,7 @@ def addidtolist(tweet_list, tweet_id):
     else:
         tweet_list = tweet_list + ',' + tweet_id
         ssm.put_parameter(Name='day-tweet-processed', Type='StringList', Value=tweet_list, Overwrite=True)
-    print 'New list: ' + tweet_list
+    print('New list: ' + tweet_list)
     return tweet_list
 
 def idinlist(t_list, idcheck):
@@ -96,7 +96,7 @@ def idinlist(t_list, idcheck):
     for word in words:
         if idcheck == word:
             return True
-        print word
+        print(word)
     return False
 
 
@@ -107,25 +107,25 @@ def process_messages(auth, eventReceived):
     for message in eventReceived['Records']:
         # Print out the body and tweet id
         body = message['body']
-        print 'message body {}'.format(body)
+        print('message body {}'.format(body))
         step_0 = body.split(' ')
         tweet_id = step_0[0]
         mediaURL = step_0[1]
-        print "url: " + mediaURL
+        print("url: " + mediaURL)
         step_1 = tweet_id.split('@')
         t_id = step_1[1]
         step_2 = t_id.split(':')
         t_id = step_2[0]
-        print "tweetID: " + t_id
+        print("tweetID: " + t_id)
         
         # Check if tweet has been already processed
         t_list = (ssm.get_parameter(Name='day-tweet-processed'))['Parameter']['Value']
-        print "Liste: " + t_list
+        print("Liste: " + t_list)
         check = idinlist(t_list, t_id)
-        print "Check value: " + str(check)
+        print("Check value: " + str(check))
         
         if(check != True):
-            print "Go to tweet if faces present"
+            print("Go to tweet if faces present")
             # Gather the image and check if faces are present
             count = count + 1
             logger.info("Count: %i" % count)
@@ -135,7 +135,7 @@ def process_messages(auth, eventReceived):
             img = Image.open(BytesIO(respImage.content))
             addidtolist(t_list, t_id)
             if len(faceDetails) == 0:
-                print "No faces in the image" 
+                print("No faces in the image")
             else:
                 imageWithFaces += 1   
                 processed = updateImage(faceDetails, img)
@@ -143,7 +143,10 @@ def process_messages(auth, eventReceived):
 
     return imageWithFaces
 
-def lambda_handler(event, context):
+
+#def lambda_handler(event, context):
+
+def lambda_handler():
     try:
         #patch_all()
         authTwitter = authenticate_twitter()
@@ -159,3 +162,5 @@ def lambda_handler(event, context):
                 {"message": "Update Image on twitter"}
             ),
         }  
+
+lambda_handler()
