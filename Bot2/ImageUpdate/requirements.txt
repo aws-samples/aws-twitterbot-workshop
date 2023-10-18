@@ -1,4 +1,4 @@
-urllib3==1.26.17
+urllib3==1.26.18
 tweepy
 boto3
 aws_xray_sdk
